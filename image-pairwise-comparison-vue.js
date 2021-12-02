@@ -11,6 +11,16 @@ const app = new Vue({
         this.pairs.push(new Pair(item, newItem));
       }
       this.items.push(newItem);
+    },
+    csvContent: function() {
+      items = "";
+      rank = 1;
+      this.sortedItems.forEach(item => {
+        var fields = [item.value.filename, rank, item.score]
+        items = items.concat(fields.join(","), "\n");
+        rank++;
+      });
+      return items;
     }
   },
   computed: {
@@ -49,4 +59,18 @@ filechooser.onchange = function () {
   for (const image of images) {
     app.addItem(image);
   }
+}
+
+const exportcsv = document.getElementById('exportcsv');
+download = function() {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + app.csvContent());
+  element.setAttribute('download', "ranking.csv");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }
