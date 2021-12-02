@@ -13,7 +13,7 @@ const app = new Vue({
       this.items.push(newItem);
     },
     csvContent: function() {
-      items = "";
+      items = "attachmentid,rank,score\n";
       rank = 1;
       this.sortedItems.forEach(item => {
         var fields = [item.value.filename, rank, item.score]
