@@ -41,3 +41,19 @@ class Pair {
     return this.winner == this.item2;
   }
 }
+
+class Metadata {
+
+  constructor(masterperson, attachmentid) {
+    this.masterperson = masterperson;
+    this.attachmentid = attachmentid;
+  }
+}
+
+class Group {
+
+  constructor(masterperson, files) {
+    this.masterperson = masterperson;
+    this.files = files;
+  }
+}

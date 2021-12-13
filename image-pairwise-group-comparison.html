@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Pairwise Comparison</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <link rel="stylesheet" href="image-pairwise-group-comparison.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <nav class="navbar is-light has-text-centered">
+    <div class="navbar-menu is-active">
+      <div class="navbar-start">
+        <a class="navbar-item" href="https://evgeniy-khist.github.io/">
+          Adaped from evgeniy-khist.github.io
+        </a>
+        <a class="navbar-item" href="image-pairwise-comparison.html">
+          Image Pairwise Comparison
+        </a>
+        <a class="navbar-item" href="image-pairwise-group-comparison.html">
+          Image Pairwise Group Comparison
+        </a>
+      </div>
+      <div class="navbar-end">
+      </div>
+    </div>
+  </nav>
+
+  <section id="app" class="section">
+    <div class="container">
+      <div class="field">
+        <div class="file is-centered is-boxed has-name">
+          <label class="file-label">
+            <input id="metadatachooser" class="file-input" type="file" accept=".csv" single>
+            <span class="file-cta"> 
+              <span class="file-label">
+                Choose metadata...
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <p v-if="metadata.size != 0" class="is-3 has-text-centered">Metadata uploaded successfully</p>
+    <br/>
+    <div class="container">
+      <div class="field">
+        <div v-show="metadata.size != 0" class="file is-centered is-boxed has-name">
+          <label class="file-label">
+            <input id="filechooser" class="file-input" type="file" multiple>
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Choose images…
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div> 
+
+  <div v-if="nextNotVotedPair != null">
+    <p class="title is-3 has-text-centered">Compare images</p>
+    <div id="compared-images" class="columns is-vcentered">
+      <div class="column compared-image">
+        <a @click="nextNotVotedPair.voteForItem1()">
+          <div class="rows is-vcentered">
+            <a @click="nextNotVotedPair.voteForItem1()">
+              <img :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename">
+              <img :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename">
+              <img :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename">
+            </a>          
+          </div>
+        </a>
+      </div>
+      <div class="column compared-image">
+        <a @click="nextNotVotedPair.voteForItem2()">
+          <div class="rows is-vcentered">
+            <a @click="nextNotVotedPair.voteForItem1()">
+              <img :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename">
+              <img :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename">
+              <img :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename">
+            </a>          
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <br/>
+  <div v-if="allPairsVoted">
+    <div class="container">
+      <div class="file is-centered is-boxed has-name">
+        <div id="exportcsv" onclick="download()">
+          <label class="file-label">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-download"></i>
+              </span>
+              <span class="file-label">
+                Export to CSV file
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <table class="table is-bordered is-striped is-hoverable center">
+        <thead>
+          <tr>
+            <th>Masterperson</th>
+            <th>Rank</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in sortedItems">
+            <td>{{ item.value.masterperson }}</td>
+            <td>{{ index + 1 }}</td>
+            <td>{{ item.score }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</section>
+
+  <script src="pairwise-comparison.js"></script>
+  <script src="image-pairwise-group-comparison-vue.js"></script>
+</body>
+
+</html>
