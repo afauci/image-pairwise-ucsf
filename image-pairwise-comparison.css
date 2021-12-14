@@ -27,6 +27,10 @@ img {
   transform: none;
 }
 
+.image-group {
+  border: 2px solid black;
+}
+
 table.center {
   margin-left: auto;
   margin-right: auto;

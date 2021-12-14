@@ -12,16 +12,14 @@ class Pair {
     this.item1 = item1;
     this.item2 = item2;
     this.winner = null;
-  }
-
-  get voted() {
-    return this.winner != null;
+    this.voted = false;
   }
 
   _voteFor(item) {
     if (!this.voted) {
       item.score++;
       this.winner = item;
+      this.voted = true;
     }
   }
 
@@ -31,6 +29,11 @@ class Pair {
 
   voteForItem2() {
     this._voteFor(this.item2);
+  }
+
+  voteForTie() {
+    // do nothing, since neither gets a point
+    this.voted = true;
   }
 
   isItem1Winner() {

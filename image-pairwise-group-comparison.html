@@ -30,8 +30,12 @@
       </div>
     </div>
   </nav>
-
   <section id="app" class="section">
+    <div class="text-field">
+      <label for="gradername">Grader name:</label>
+      <input id="gradername" type="text" onchange="updateGraderName()">
+    </div>
+    <br/>
     <div class="container">
       <div class="field">
         <div class="file is-centered is-boxed has-name">
@@ -68,26 +72,27 @@
 
   <div v-if="nextNotVotedPair != null">
     <p class="title is-3 has-text-centered">Compare images</p>
-    <div id="compared-images" class="columns is-vcentered">
+    <div class="tie-button">
+      <a @click="nextNotVotedPair.voteForTie()">
+        <button id="tie" class="button">Tie</button>
+      </a>
+    </div>
+    <div id="compared-images" class="columns is-vcentered images">
       <div class="column compared-image">
         <a @click="nextNotVotedPair.voteForItem1()">
-          <div class="rows is-vcentered">
-            <a @click="nextNotVotedPair.voteForItem1()">
+          <div class="rows is-vcentered image-group">
               <img :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename">
               <img :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename">
               <img :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename">
-            </a>          
           </div>
         </a>
       </div>
       <div class="column compared-image">
         <a @click="nextNotVotedPair.voteForItem2()">
-          <div class="rows is-vcentered">
-            <a @click="nextNotVotedPair.voteForItem1()">
+          <div class="rows is-vcentered image-group">
               <img :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename">
               <img :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename">
               <img :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename">
-            </a>          
           </div>
         </a>
       </div>

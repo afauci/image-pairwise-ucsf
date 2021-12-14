@@ -4,7 +4,8 @@ const app = new Vue({
     items: [],
     pairs: [],
     metadata: new Map(),
-    groups: new Map()
+    groups: new Map(),
+    grader: null,
   },
   methods: {
     addToGroup: function (file) {
@@ -24,10 +25,10 @@ const app = new Vue({
       this.items.push(newItem);
     },
     csvContent: function() {
-      csvItems = "masterperson,rank,score\n";
+      csvItems = "grader,masterperson,rank,score\n";
       rank = 1;
       this.sortedItems.forEach(item => {
-        var fields = [item.value.masterperson, rank, item.score]
+        var fields = [this.grader, item.value.masterperson, rank, item.score]
         csvItems = csvItems.concat(fields.join(","), "\n");
         rank++;
       });
@@ -45,11 +46,14 @@ const app = new Vue({
       return this.notVotedPairs.length > 0 ? this.notVotedPairs[0] : null;
     },
     allPairsVoted: function () {
-      console.log(this.notVotedPairs.length);
       return this.pairs.length > 0 && this.notVotedPairs.length == 0;
     }
   }
 });
+
+updateGraderName = function() {
+  app.grader = gradername.value;
+}
 
 const filechooser = document.querySelector('#filechooser');
 let images = [];
@@ -97,7 +101,6 @@ metadatachooser.onchange = function() {
   reader.readAsText(metadataFile);
 }
 
-const exportcsv = document.getElementById('exportcsv');
 download = function() {
   let element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + app.csvContent());

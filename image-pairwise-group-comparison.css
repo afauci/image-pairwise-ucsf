@@ -19,12 +19,16 @@ img {
 
 #compared-images:hover .compared-image img {
   opacity: 0.5;
-  transform: scale(0.8);
+  transform: scale(0.9);
 }
 
 #compared-images:hover .compared-image:hover img {
   opacity: 1;
   transform: none;
+}
+
+.image-group {
+  border: 2px solid black;
 }
 
 table.center {
@@ -41,4 +45,16 @@ table.center td {
 img.thumbnail {
   max-width: 128px;
   max-height: 128px;
+}
+
+.text-field {
+  text-align: center;
+}
+
+.tie-button {
+  text-align: center;
+}
+
+.images {
+  column-gap: 100px
 }
