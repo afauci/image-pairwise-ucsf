@@ -1,6 +1,6 @@
 # Pairwise Comparison Method
 
-An adaptation of evgeniy-khist's pairwise comparison work.
+Note: the following is adapted from evgeniy-khist's pairwise comparison work https://evgeniy-khist.github.io/pairwise-comparison.
 
 Pairwise comparison (or paired comparison) is a process of comparing entities in pairs to judge which of each entity is preferred.
 
@@ -34,14 +34,6 @@ Example 2:
 | **C** | 0 | 1 | - | 1 | **2** |
 | **D** | 1 | 0 | 0 | - | **1** |
 
-## Pairwise comparison
-
-The pairwise comparison method can be implemented as an interactive web application.
-
-https://afauci.github.io/pairwise-comparison/pairwise-comparison.html
-
-![Pairwise comparison demo](pairwise-comparison.gif)
-
 ## Image pairwise comparison
 
 The pairwise comparison method can also be used for choosing the best image or photo.
@@ -50,13 +42,17 @@ https://afauci.github.io/pairwise-comparison/image-pairwise-comparison.html
 
 ![Image pairwise comparison](image-pairwise-comparison.gif)
 
-## Solution comparison
+## Image pairwise group comparison
 
-When it comes to important decisions, it's better not to compare solutions directly.
-Instead, prepare a set of requirements that the solution should satisfy, 
-prioritize the requirements using pairwise comparison method, 
-and choose the solution that best meets the requirements.
+The pairwise comparison method can also be used for choosing between groups of images or photos.
+To group the photos, upload a CSV file that contains metadata about the images. Then, upload the images and they will be grouped for voting based on the metadata provided.
 
-https://afauci.github.io/pairwise-comparison/solution-comparison.html
+https://afauci.github.io/pairwise-comparison/image-pairwise-group-comparison.html
 
-![Solution comparison](solution-comparison.gif)
+## Downloading results to a CSV
+
+Once the images (or groups of images) are compared, you have the option of downloading the results as a CSV file.
+
+## Offline use
+
+To the use the program offline, simply click on the image-pairwise-comparison.html or image-pairwise-group-comparison.html files from the codebase. This will launch them in your browser and allow them to be run locally.
