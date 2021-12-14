@@ -70,11 +70,12 @@
       </div>
     </div> 
 
+  <br/>
   <div v-if="nextNotVotedPair != null">
     <p class="title is-3 has-text-centered">Compare images</p>
     <div class="tie-button">
       <a @click="nextNotVotedPair.voteForTie()">
-        <button id="tie" class="button">Tie</button>
+        <button id="tie" class="button">It's a Tie</button>
       </a>
     </div>
     <div id="compared-images" class="columns is-vcentered images">
