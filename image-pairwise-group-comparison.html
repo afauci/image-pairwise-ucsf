@@ -82,18 +82,20 @@
       <div class="column compared-image">
         <a @click="nextNotVotedPair.voteForItem1()">
           <div class="rows is-vcentered image-group">
-              <img :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename">
-              <img :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename">
-              <img :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename">
+              <img v-if="nextNotVotedPair.item1.value.files[0] != null" :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename">
+              <img v-if="nextNotVotedPair.item1.value.files[1] != null" :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename">
+              <img v-if="nextNotVotedPair.item1.value.files[2] != null" :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename">
+              <img v-if="nextNotVotedPair.item1.value.files[3] != null" :src="nextNotVotedPair.item1.value.files[3].url" :title="nextNotVotedPair.item1.value.files[3].filename">
           </div>
         </a>
       </div>
       <div class="column compared-image">
         <a @click="nextNotVotedPair.voteForItem2()">
           <div class="rows is-vcentered image-group">
-              <img :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename">
-              <img :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename">
-              <img :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename">
+              <img v-if="nextNotVotedPair.item2.value.files[0] != null" :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename">
+              <img v-if="nextNotVotedPair.item2.value.files[1] != null" :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename">
+              <img v-if="nextNotVotedPair.item2.value.files[2] != null" :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename">
+              <img v-if="nextNotVotedPair.item2.value.files[3] != null" :src="nextNotVotedPair.item2.value.files[3].url" :title="nextNotVotedPair.item2.value.files[3].filename">
           </div>
         </a>
       </div>
