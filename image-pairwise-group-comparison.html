@@ -73,11 +73,6 @@
   <br/>
   <div v-if="nextNotVotedPair != null">
     <p class="title is-3 has-text-centered">Compare images</p>
-    <div class="vote-button">
-      <a @click="nextNotVotedPair.voteForTie()">
-        <button id="tie" class="button">It's a Tie</button>
-      </a>
-    </div>
     <div id="compared-images" class="columns images">
       <div class="column compared-image">
         <a class="tie-button" @click="nextNotVotedPair.voteForItem1()">
@@ -88,6 +83,13 @@
           <img id="left-img-2" class="individual-img" v-if="nextNotVotedPair.item1.value.files[1] != null" :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename" onclick="zoomImage(this)">
           <img id="left-img-3" class="individual-img" v-if="nextNotVotedPair.item1.value.files[2] != null" :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename" onclick="zoomImage(this)">
           <img id="left-img-4" class="individual-img" v-if="nextNotVotedPair.item1.value.files[3] != null" :src="nextNotVotedPair.item1.value.files[3].url" :title="nextNotVotedPair.item1.value.files[3].filename" onclick="zoomImage(this)">
+        </div>
+      </div>
+      <div class="button-column">
+        <div class="vote-button">
+          <a @click="nextNotVotedPair.voteForTie()">
+            <button id="tie" class="button">It's a Tie</button>
+          </a>
         </div>
       </div>
       <div class="column compared-image">
