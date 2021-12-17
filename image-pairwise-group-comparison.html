@@ -73,7 +73,7 @@
   <br/>
   <div v-if="nextNotVotedPair != null">
     <p class="title is-3 has-text-centered">Compare images</p>
-    <div class="tie-button">
+    <div class="vote-button">
       <a @click="nextNotVotedPair.voteForTie()">
         <button id="tie" class="button">It's a Tie</button>
       </a>
@@ -81,22 +81,34 @@
     <div id="compared-images" class="columns images">
       <div id="person1" class="column compared-image">
         <a class="tie-button" @click="nextNotVotedPair.voteForItem1()">
-          <button id="left-button" class="button">Vote left</button>
+          <button id="left-button" class="button vote-button">Vote left</button>
         </a>
-        <img v-if="nextNotVotedPair.item1.value.files[0] != null" :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename">
-        <img v-if="nextNotVotedPair.item1.value.files[1] != null" :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename">
-        <img v-if="nextNotVotedPair.item1.value.files[2] != null" :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename">
-        <img v-if="nextNotVotedPair.item1.value.files[3] != null" :src="nextNotVotedPair.item1.value.files[3].url" :title="nextNotVotedPair.item1.value.files[3].filename">
+        <div class="rows is-vcentered image-group">
+          <img class="individual-img" v-if="nextNotVotedPair.item1.value.files[0] != null" :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename" onclick="zoomImage(this)">
+          <img class="individual-img" v-if="nextNotVotedPair.item1.value.files[1] != null" :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename" onclick="zoomImage(this)">
+          <img class="individual-img" v-if="nextNotVotedPair.item1.value.files[2] != null" :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename" onclick="zoomImage(this)">
+          <img class="individual-img" v-if="nextNotVotedPair.item1.value.files[3] != null" :src="nextNotVotedPair.item1.value.files[3].url" :title="nextNotVotedPair.item1.value.files[3].filename" onclick="zoomImage(this)">
+        </div>
       </div>
       <div id="person2" class="column compared-image">
         <a @click="nextNotVotedPair.voteForItem1()">
-          <button id="right-button" class="button">Vote right</button>
+          <button id="right-button" class="button vote-button">Vote right</button>
         </a>
-        <img v-if="nextNotVotedPair.item2.value.files[0] != null" :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename">
-        <img v-if="nextNotVotedPair.item2.value.files[1] != null" :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename">
-        <img v-if="nextNotVotedPair.item2.value.files[2] != null" :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename">
-        <img v-if="nextNotVotedPair.item2.value.files[3] != null" :src="nextNotVotedPair.item2.value.files[3].url" :title="nextNotVotedPair.item2.value.files[3].filename">
+        <div class="rows is-vcentered image-group">
+          <img class="individual-img" v-if="nextNotVotedPair.item2.value.files[0] != null" :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename" onclick="zoomImage(this)">
+          <img class="individual-img" v-if="nextNotVotedPair.item2.value.files[1] != null" :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename" onclick="zoomImage(this)">
+          <img class="individual-img" v-if="nextNotVotedPair.item2.value.files[2] != null" :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename" onclick="zoomImage(this)">
+          <img class="individual-img" v-if="nextNotVotedPair.item2.value.files[3] != null" :src="nextNotVotedPair.item2.value.files[3].url" :title="nextNotVotedPair.item2.value.files[3].filename" onclick="zoomImage(this)">
+        </div>
       </div>
+    </div>
+    <div id="image-zoom" class="modal">
+
+      <!-- The Close Button -->
+      <span class="close">&times;</span>
+    
+      <!-- Modal Content (The Image) -->
+      <img class="modal-content" id="zoomed-img">
     </div>
   </div>
 

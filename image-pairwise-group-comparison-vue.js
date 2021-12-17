@@ -113,3 +113,22 @@ download = function() {
 
   document.body.removeChild(element);
 }
+
+// Adapted from https://www.w3schools.com/howto/howto_css_modal_images.asp
+zoomImage = function(clickedImg) {
+  // Get the modal
+  var modal = document.getElementById("image-zoom");
+
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var modalImg = document.getElementById("zoomed-img");
+  modal.style.display = 'block';
+  modalImg.src = clickedImg.src;
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = 'none';
+  }
+}
