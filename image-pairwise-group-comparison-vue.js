@@ -131,4 +131,11 @@ zoomImage = function(clickedImg) {
   span.onclick = function() {
     modal.style.display = 'none';
   }
+
+  document.onkeydown = function(event) {
+    console.log(event.key);
+    if (event.key === 'Backspace' || event.key === 'Enter' || event.key === 'Escape') {
+      modal.style.display = 'none';
+    }
+  }
 }
