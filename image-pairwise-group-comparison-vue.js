@@ -5,7 +5,7 @@ const app = new Vue({
     pairs: [],
     metadata: new Map(),
     groups: new Map(),
-    grader: null,
+    grader: null
   },
   methods: {
     addToGroup: function (file) {
@@ -32,7 +32,7 @@ const app = new Vue({
         csvItems = csvItems.concat(fields.join(","), "\n");
         rank++;
       });
-      return csvItems;
+      return csvItems.concat('\n');
     }
   },
   computed: {

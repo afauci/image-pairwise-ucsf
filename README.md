@@ -45,7 +45,8 @@ https://afauci.github.io/pairwise-comparison/image-pairwise-comparison.html
 ## Image pairwise group comparison
 
 The pairwise comparison method can also be used for choosing between groups of images or photos.
-To group the photos, upload a CSV file that contains metadata about the images. Then, upload the images and they will be grouped for voting based on the metadata provided.
+To compare the groups of photos, upload a CSV file that contains metadata about the images. Then, upload the images and they will be grouped for voting based on the metadata provided.
+To zoom in on a specific photo, right click on the image you want to view and select "Open in a new tab". The image will open by itself in a new tab in the browser.
 
 https://afauci.github.io/pairwise-comparison/image-pairwise-group-comparison.html
 

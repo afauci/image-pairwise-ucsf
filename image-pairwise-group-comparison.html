@@ -79,25 +79,23 @@
       </a>
     </div>
     <div id="compared-images" class="columns images">
-      <div class="column compared-image">
-        <a @click="nextNotVotedPair.voteForItem1()">
-          <div class="rows is-vcentered image-group">
-              <img v-if="nextNotVotedPair.item1.value.files[0] != null" :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename">
-              <img v-if="nextNotVotedPair.item1.value.files[1] != null" :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename">
-              <img v-if="nextNotVotedPair.item1.value.files[2] != null" :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename">
-              <img v-if="nextNotVotedPair.item1.value.files[3] != null" :src="nextNotVotedPair.item1.value.files[3].url" :title="nextNotVotedPair.item1.value.files[3].filename">
-          </div>
+      <div id="person1" class="column compared-image">
+        <a class="tie-button" @click="nextNotVotedPair.voteForItem1()">
+          <button id="left-button" class="button">Vote left</button>
         </a>
+        <img v-if="nextNotVotedPair.item1.value.files[0] != null" :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename">
+        <img v-if="nextNotVotedPair.item1.value.files[1] != null" :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename">
+        <img v-if="nextNotVotedPair.item1.value.files[2] != null" :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename">
+        <img v-if="nextNotVotedPair.item1.value.files[3] != null" :src="nextNotVotedPair.item1.value.files[3].url" :title="nextNotVotedPair.item1.value.files[3].filename">
       </div>
-      <div class="column compared-image">
-        <a @click="nextNotVotedPair.voteForItem2()">
-          <div class="rows is-vcentered image-group">
-              <img v-if="nextNotVotedPair.item2.value.files[0] != null" :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename">
-              <img v-if="nextNotVotedPair.item2.value.files[1] != null" :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename">
-              <img v-if="nextNotVotedPair.item2.value.files[2] != null" :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename">
-              <img v-if="nextNotVotedPair.item2.value.files[3] != null" :src="nextNotVotedPair.item2.value.files[3].url" :title="nextNotVotedPair.item2.value.files[3].filename">
-          </div>
+      <div id="person2" class="column compared-image">
+        <a @click="nextNotVotedPair.voteForItem1()">
+          <button id="right-button" class="button">Vote right</button>
         </a>
+        <img v-if="nextNotVotedPair.item2.value.files[0] != null" :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename">
+        <img v-if="nextNotVotedPair.item2.value.files[1] != null" :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename">
+        <img v-if="nextNotVotedPair.item2.value.files[2] != null" :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename">
+        <img v-if="nextNotVotedPair.item2.value.files[3] != null" :src="nextNotVotedPair.item2.value.files[3].url" :title="nextNotVotedPair.item2.value.files[3].filename">
       </div>
     </div>
   </div>
