@@ -61,16 +61,75 @@ class Group {
   }
 }
 
-class Node {
-  constructor(data) {
-    this.data = data;
-    this.left = null;
-    this.right = null;
-  }
-}
+class SortedNode {
 
-class BinaryTree {
-  constructor() {
-    this.root = null;
+  constructor(item) {
+    this.item = item;
+    this.isLessThan = new Set();
+    this.isTied = new Set();
+    this.isGreaterThan = new Set();
+  }
+
+  isAlreadyLessThan = function(comparedNode) {
+    if (this.isLessThan.has(comparedNode)) {
+      comparedNode.isGreaterThan.add(this);
+      return true;
+    }
+    return false;
+  }
+
+  isAlreadyGreaterThan = function(comparedNode) {
+    if (this.isGreaterThan.has(comparedNode)) {
+      comparedNode.isLessThan.add(this);
+      return true;
+    }
+    return false;
+  }
+
+  isAlreadyTied = function(comparedNode) {
+    if (this.isTied.has(comparedNode)) {
+      comparedNode.isTied.add(this);
+    }
+  }
+
+  isAlreadySorted = function(comparedNode) {
+    console.log("Comparison: " + this.item.value.masterperson + ", " + comparedNode.item.value.masterperson);
+    return (this.isAlreadyTied(comparedNode) || this.isAlreadyLessThan(comparedNode) || this.isAlreadyGreaterThan(comparedNode));
+  }
+
+  addToSortedNode = function(comparedNode, choice) {
+    // if the left (i.e. this node) is chosen, this > compared
+    if (choice === "left") {
+      // add this node to the < group for the compared node
+      comparedNode.isLessThan.add(this);
+      // since this > compared, then all the nodes > this are also > compared
+      this.addAllToSet(comparedNode.isLessThan, this.isLessThan);
+      // add the compared node to < this
+      this.isGreaterThan.add(comparedNode);
+    // if the right (i.e. the compared node) is chosen, compared > this
+    } else if (choice === "right") {
+      // add this node to the > group for the compared node
+      comparedNode.isGreaterThan.add(this);
+      // since this < compared, all nodes < this are also < compared
+      this.addAllToSet(comparedNode.isGreaterThan, this.isGreaterThan);
+      // add compared to > group of this
+      this.isLessThan.add(comparedNode);
+    } else { // if a tie is chosen, this === compared
+      // add this to tie groups
+      comparedNode.isTied.add(this);
+      this.isTied.add(comparedNode);
+      // that means anything > this is also > compared (and vice versa)
+      this.addAllToSet(comparedNode.isGreaterThan, this.isGreaterThan);
+      this.addAllToSet(this.isGreaterThan, comparedNode.isGreaterThan);
+      // and anything < this is < compared (and vice versa)
+      this.addAllToSet(comparedNode.isLessThan, this.isLessThan);
+      this.addAllToSet(this.isLessThan, comparedNode.isLessThan);
+    }
+  }
+
+  addAllToSet(set, otherSet) {
+    otherSet.forEach(item => {
+      set.add(item);
+    });
   }
 }
