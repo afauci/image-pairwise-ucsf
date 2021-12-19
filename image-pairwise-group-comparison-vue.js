@@ -50,8 +50,6 @@ const app = new Vue({
         if (!(nextPair.item1.isAlreadySorted(nextPair.item2) || nextPair.item2.isAlreadySorted(nextPair.item1))) {
           return nextPair;
         } else {
-          console.log("already sorted - item1: " + nextPair.item1.item.value.masterperson + ", " + nextPair.item1.isLessThan.size + ", " + nextPair.item1.isGreaterThan.size);
-          console.log("already sorted - item2: " + nextPair.item2.item.value.masterperson + ", " + nextPair.item2.isLessThan.size + ", " + nextPair.item2.isGreaterThan.size);
           nextPair.voted = true;
           return this.nextNotVotedPair;
         }

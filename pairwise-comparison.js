@@ -93,7 +93,6 @@ class SortedNode {
   }
 
   isAlreadySorted = function(comparedNode) {
-    console.log("Comparison: " + this.item.value.masterperson + ", " + comparedNode.item.value.masterperson);
     return (this.isAlreadyTied(comparedNode) || this.isAlreadyLessThan(comparedNode) || this.isAlreadyGreaterThan(comparedNode));
   }
 
