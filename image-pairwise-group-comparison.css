@@ -47,6 +47,11 @@ img.thumbnail {
   margin: 10px;
 }
 
+.reload-button {
+  text-align: right;
+  margin: 5px;
+}
+
 /* .images {
   column-gap: 100px;
 } */
