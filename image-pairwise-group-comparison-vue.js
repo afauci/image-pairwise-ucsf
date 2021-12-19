@@ -31,10 +31,11 @@ const app = new Vue({
       rank = 1;
       this.sortedNodes.forEach(node => {
         var fields = [this.grader, node.item.value.masterperson, rank, node.item.score]
-        csvItems = csvItems.concat(fields.join(","), "\n");
+        csvItems = csvItems.concat(fields.join(","), "\r\n");
         rank++;
       });
-      return csvItems.concat('\n');
+      csvItems = csvItems.concat("\r\n");
+      return csvItems;
     }
   },
   computed: {
