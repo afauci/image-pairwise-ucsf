@@ -48,6 +48,8 @@ The pairwise comparison method can also be used for choosing between groups of i
 To compare the groups of photos, upload a CSV file that contains metadata about the images. Then, upload the images and they will be grouped for voting based on the metadata provided.
 To zoom in on a specific photo, right click on the image you want to view and select "Open in a new tab". The image will open by itself in a new tab in the browser.
 
+There is an algorithm that is used to prevent redundant comparisons. It is similar logic to Comparison Sort, which relies on knowing that if A > B and A < C, then B < C without having to do the comparison manually.
+
 https://afauci.github.io/pairwise-comparison/image-pairwise-group-comparison.html
 
 ## Downloading results to a CSV
@@ -57,3 +59,7 @@ Once the images (or groups of images) are compared, you have the option of downl
 ## Offline use
 
 To the use the program offline, simply click on the image-pairwise-comparison.html or image-pairwise-group-comparison.html files from the codebase. This will launch them in your browser and allow them to be run locally.
+
+# Tests
+
+There are tests for the comparison sort algorithm in the __tests__ directory.
