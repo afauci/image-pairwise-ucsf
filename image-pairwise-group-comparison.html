@@ -75,40 +75,33 @@
     <p class="title is-3 has-text-centered">Compare images</p>
     <div id="compared-images" class="columns images">
       <div class="column compared-image">
-        <a class="tie-button" @click="nextNotVotedPair.voteForItem1()">
-          <button id="left-button" class="button vote-button">Vote left</button>
-        </a>
-        <div class="rows is-vcentered image-group">
-          <img id="left-img-1" class="individual-img" v-if="nextNotVotedPair.item1.value.files[0] != null" :src="nextNotVotedPair.item1.value.files[0].url" :title="nextNotVotedPair.item1.value.files[0].filename" onclick="zoomImage(this)">
-          <img id="left-img-2" class="individual-img" v-if="nextNotVotedPair.item1.value.files[1] != null" :src="nextNotVotedPair.item1.value.files[1].url" :title="nextNotVotedPair.item1.value.files[1].filename" onclick="zoomImage(this)">
-          <img id="left-img-3" class="individual-img" v-if="nextNotVotedPair.item1.value.files[2] != null" :src="nextNotVotedPair.item1.value.files[2].url" :title="nextNotVotedPair.item1.value.files[2].filename" onclick="zoomImage(this)">
-          <img id="left-img-4" class="individual-img" v-if="nextNotVotedPair.item1.value.files[3] != null" :src="nextNotVotedPair.item1.value.files[3].url" :title="nextNotVotedPair.item1.value.files[3].filename" onclick="zoomImage(this)">
+        <button id="left-button" class="button vote-button" onclick="chooseLeft()">Vote left</button>
+        <div id="left-person" class="rows is-vcentered image-group">
+          <img id="left-img-1" class="individual-img" v-if="nextNotVotedPair.item1.item.value.files[0] != null" :src="nextNotVotedPair.item1.item.value.files[0].url" :title="nextNotVotedPair.item1.item.value.files[0].filename" onclick="zoomImage(this)">
+          <img id="left-img-2" class="individual-img" v-if="nextNotVotedPair.item1.item.value.files[1] != null" :src="nextNotVotedPair.item1.item.value.files[1].url" :title="nextNotVotedPair.item1.item.value.files[1].filename" onclick="zoomImage(this)">
+          <img id="left-img-3" class="individual-img" v-if="nextNotVotedPair.item1.item.value.files[2] != null" :src="nextNotVotedPair.item1.item.value.files[2].url" :title="nextNotVotedPair.item1.item.value.files[2].filename" onclick="zoomImage(this)">
+          <img id="left-img-4" class="individual-img" v-if="nextNotVotedPair.item1.item.value.files[3] != null" :src="nextNotVotedPair.item1.item.value.files[3].url" :title="nextNotVotedPair.item1.item.value.files[3].filename" onclick="zoomImage(this)">
         </div>
       </div>
       <div class="button-column">
         <div class="vote-button">
-          <a @click="nextNotVotedPair.voteForTie()">
-            <button id="tie" class="button">It's a Tie</button>
-          </a>
+          <button id="tie" class="button" onclick="chooseTie()">It's a Tie</button>
         </div>
       </div>
       <div class="column compared-image">
-        <a @click="nextNotVotedPair.voteForItem1()">
-          <button id="right-button" class="button vote-button">Vote right</button>
-        </a>
-        <div class="rows is-vcentered image-group">
-          <img id="right-img-1" class="individual-img" v-if="nextNotVotedPair.item2.value.files[0] != null" :src="nextNotVotedPair.item2.value.files[0].url" :title="nextNotVotedPair.item2.value.files[0].filename" onclick="zoomImage(this)">
-          <img id="right-img-2" class="individual-img" v-if="nextNotVotedPair.item2.value.files[1] != null" :src="nextNotVotedPair.item2.value.files[1].url" :title="nextNotVotedPair.item2.value.files[1].filename" onclick="zoomImage(this)">
-          <img id="right-img-3" class="individual-img" v-if="nextNotVotedPair.item2.value.files[2] != null" :src="nextNotVotedPair.item2.value.files[2].url" :title="nextNotVotedPair.item2.value.files[2].filename" onclick="zoomImage(this)">
-          <img id="right-img-4" class="individual-img" v-if="nextNotVotedPair.item2.value.files[3] != null" :src="nextNotVotedPair.item2.value.files[3].url" :title="nextNotVotedPair.item2.value.files[3].filename" onclick="zoomImage(this)">
+        <button id="right-button" class="button vote-button" onclick="chooseRight()">Vote right</button>
+        <div id="right-person" class="rows is-vcentered image-group">
+          <img id="right-img-1" class="individual-img" v-if="nextNotVotedPair.item2.item.value.files[0] != null" :src="nextNotVotedPair.item2.item.value.files[0].url" :title="nextNotVotedPair.item2.item.value.files[0].filename" onclick="zoomImage(this)">
+          <img id="right-img-2" class="individual-img" v-if="nextNotVotedPair.item2.item.value.files[1] != null" :src="nextNotVotedPair.item2.item.value.files[1].url" :title="nextNotVotedPair.item2.item.value.files[1].filename" onclick="zoomImage(this)">
+          <img id="right-img-3" class="individual-img" v-if="nextNotVotedPair.item2.item.value.files[2] != null" :src="nextNotVotedPair.item2.item.value.files[2].url" :title="nextNotVotedPair.item2.item.value.files[2].filename" onclick="zoomImage(this)">
+          <img id="right-img-4" class="individual-img" v-if="nextNotVotedPair.item2.item.value.files[3] != null" :src="nextNotVotedPair.item2.item.value.files[3].url" :title="nextNotVotedPair.item2.item.value.files[3].filename" onclick="zoomImage(this)">
         </div>
       </div>
     </div>
+    <!-- Adapted from https://www.w3schools.com/howto/howto_css_modal_images.asp -->
     <div id="image-zoom" class="modal">
-
       <!-- The Close Button -->
       <span class="close">&times;</span>
-    
       <!-- Modal Content (The Image) -->
       <img class="modal-content" id="zoomed-img">
     </div>
@@ -142,10 +135,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in sortedItems">
-            <td>{{ item.value.masterperson }}</td>
+          <tr v-for="(node, index) in sortedNodes">
+            <td>{{ node.item.value.masterperson }}</td>
             <td>{{ index + 1 }}</td>
-            <td>{{ item.score }}</td>
+            <td>{{ node.isGreaterThan.size }}</td>
           </tr>
         </tbody>
       </table>

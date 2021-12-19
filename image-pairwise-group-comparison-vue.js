@@ -1,8 +1,9 @@
 const app = new Vue({
   el: '#app',
   data: {
-    items: [],
+    nodes: [],
     pairs: [],
+    sortingSets: new Map(),
     metadata: new Map(),
     groups: new Map(),
     grader: null
@@ -19,16 +20,17 @@ const app = new Vue({
     },
     addItem: function (group) {
       const newItem = new Item(new Group(group[0], group[1]));
-      for (const item of this.items) {
-        this.pairs.push(new Pair(item, newItem));
+      const newSortedNode = new SortedNode(newItem);
+      for (const node of this.nodes) {
+        this.pairs.push(new Pair(node, newSortedNode));
       }
-      this.items.push(newItem);
+      this.nodes.push(newSortedNode);
     },
     csvContent: function() {
       csvItems = "grader,masterperson,rank,score\n";
       rank = 1;
-      this.sortedItems.forEach(item => {
-        var fields = [this.grader, item.value.masterperson, rank, item.score]
+      this.sortedNodes.forEach(node => {
+        var fields = [this.grader, node.item.value.masterperson, rank, node.item.score]
         csvItems = csvItems.concat(fields.join(","), "\n");
         rank++;
       });
@@ -36,20 +38,49 @@ const app = new Vue({
     }
   },
   computed: {
-    sortedItems: function () {
-      return Array.from(this.items).sort((a, b) => b.score - a.score);
+    sortedNodes: function () {
+      return Array.from(this.nodes).sort((a, b) => b.isGreaterThan.size - a.isGreaterThan.size);
     },
     notVotedPairs: function () {
       return this.pairs.filter(pair => !pair.voted);
     },
     nextNotVotedPair: function () {
-      return this.notVotedPairs.length > 0 ? this.notVotedPairs[0] : null;
+      if (this.notVotedPairs.length > 0) {
+        let nextPair = this.notVotedPairs[0];
+        if (!(nextPair.item1.isAlreadySorted(nextPair.item2) || nextPair.item2.isAlreadySorted(nextPair.item1))) {
+          return nextPair;
+        } else {
+          console.log("already sorted - item1: " + nextPair.item1.item.value.masterperson + ", " + nextPair.item1.isLessThan.size + ", " + nextPair.item1.isGreaterThan.size);
+          console.log("already sorted - item2: " + nextPair.item2.item.value.masterperson + ", " + nextPair.item2.isLessThan.size + ", " + nextPair.item2.isGreaterThan.size);
+          nextPair.voted = true;
+          return this.nextNotVotedPair;
+        }
+      }
+      return null;
     },
     allPairsVoted: function () {
       return this.pairs.length > 0 && this.notVotedPairs.length == 0;
     }
   }
 });
+
+chooseLeft = function() {
+  doSorting("left");
+}
+
+chooseRight = function() {
+  doSorting("right");
+}
+
+chooseTie = function() {
+  doSorting("tie");
+}
+
+doSorting = function(choice) {
+  let pair = app.nextNotVotedPair;
+  pair.voted = true;
+  pair.item1.addToSortedNode(pair.item2, choice);
+}
 
 updateGraderName = function() {
   app.grader = gradername.value;
@@ -71,7 +102,7 @@ filechooser.onchange = function () {
     });
 
   app.pairs = [];
-  app.items = [];
+  app.nodes = [];
   app.groups = new Map();
   for (const image of images) {
     app.addToGroup(image);
@@ -133,7 +164,6 @@ zoomImage = function(clickedImg) {
   }
 
   document.onkeydown = function(event) {
-    console.log(event.key);
     if (event.key === 'Backspace' || event.key === 'Enter' || event.key === 'Escape') {
       modal.style.display = 'none';
     }
