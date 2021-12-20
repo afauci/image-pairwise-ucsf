@@ -38,7 +38,7 @@ Example 2:
 
 The pairwise comparison method can also be used for choosing the best image or photo.
 
-https://afauci.github.io/pairwise-comparison/image-pairwise-comparison.html
+https://afauci.github.io/image-pairwise-ucsf/image-pairwise-comparison.html
 
 ![Image pairwise comparison](image-pairwise-comparison.gif)
 
@@ -50,7 +50,7 @@ To zoom in on a specific photo, right click on the image you want to view and se
 
 There is an algorithm that is used to prevent redundant comparisons. It is similar logic to Comparison Sort, which relies on knowing that if A > B and A < C, then B < C without having to do the comparison manually.
 
-https://afauci.github.io/pairwise-comparison/image-pairwise-group-comparison.html
+https://afauci.github.io/image-pairwise-ucsf/image-pairwise-group-comparison.html
 
 ## Downloading results to a CSV
 
