@@ -34,8 +34,7 @@ const app = new Vue({
         csvItems = csvItems.concat(fields.join(","), "\r\n");
         rank++;
       });
-      csvItems = csvItems.concat("\r\n");
-      return csvItems;
+      return encodeURIComponent(csvItems);
     }
   },
   computed: {
