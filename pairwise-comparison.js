@@ -133,4 +133,5 @@ class SortedNode {
   }
 }
 
-module.exports = {SortedNode, Item}
+// Note: This line is needed to run the pairwise-comparison.spec.js tests, but it causes an error on the webpage when loading. Uncomment and use yarn test to run the test.
+// module.exports = { SortedNode, Item };

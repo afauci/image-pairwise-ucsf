@@ -1,4 +1,4 @@
-const pairwise = require('../pairwise-comparison.js');
+const pairwise = require('../pairwise-comparison');
 
 let nodeA = new pairwise.SortedNode(new pairwise.Item("nameA", 0));
 let nodeB = new pairwise.SortedNode(new pairwise.Item("nameB", 0));
