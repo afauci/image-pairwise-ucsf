@@ -30,7 +30,7 @@ const app = new Vue({
       csvItems = "grader,masterperson,rank,score\n";
       rank = 1;
       this.sortedNodes.forEach(node => {
-        var fields = [this.grader, node.item.value.masterperson, rank, node.item.score]
+        var fields = [this.grader, node.item.value.masterperson, rank, node.isGreaterThan.size]
         csvItems = csvItems.concat(fields.join(","), "\r\n");
         rank++;
       });
