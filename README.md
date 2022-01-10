@@ -58,7 +58,7 @@ Once the images (or groups of images) are compared, you have the option of downl
 
 ## Offline use
 
-To the use the program offline, simply click on the image-pairwise-comparison.html or image-pairwise-group-comparison.html files from the codebase. This will launch them in your browser and allow them to be run locally.
+To the use the program offline, you need to download the codebase from https://github.com/afauci/image-pairwise-ucsf (go to Code --> Download zip). Once the files are downloaded on your device, open the zip file and click on the image-pairwise-group-comparison.html file (or image-pairwise-comparison.html if using that comparison instead). This will launch them in your browser and allow them to be run locally.
 
 # Tests
 
