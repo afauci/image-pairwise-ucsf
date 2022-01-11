@@ -35,6 +35,19 @@ const app = new Vue({
         rank++;
       });
       return encodeURIComponent(csvItems);
+    },
+    saveCurrentGrading: function() {
+      console.log("Saving current data: " + this.grader);
+      localStorage.setItem('pairs', JSON.stringify(this.pairs));
+      // pairs, nodes, sortingSets as JSON
+    },
+    startOver: function() {
+      localStorage.clear();
+      window.location.reload();
+    },
+    loadFromStorage: function() {
+      this.pairs = JSON.parse(localStorage.getItem('pairs'));
+      console.log("Loading from storage: " + this.pairs[0]);
     }
   },
   computed: {
@@ -59,6 +72,19 @@ const app = new Vue({
     allPairsVoted: function () {
       return this.pairs.length > 0 && this.notVotedPairs.length == 0;
     }
+  },
+  mounted() {
+    if (localStorage.grader) {
+      this.grader = localStorage.grader;
+    }
+    if (localStorage.currentGrading) {
+      
+    }
+  },
+  watch: {
+    grader(newGrader) {
+      localStorage.grader = newGrader;
+    }
   }
 });
 
@@ -78,10 +104,6 @@ doSorting = function(choice) {
   let pair = app.nextNotVotedPair;
   pair.voted = true;
   pair.item1.addToSortedNode(pair.item2, choice);
-}
-
-updateGraderName = function() {
-  app.grader = gradername.value;
 }
 
 const filechooser = document.querySelector('#filechooser');
@@ -131,6 +153,7 @@ metadatachooser.onchange = function() {
 }
 
 download = function() {
+  // clear data from previous comparisons
   let element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + app.csvContent());
   element.setAttribute('download', "ranking.csv");

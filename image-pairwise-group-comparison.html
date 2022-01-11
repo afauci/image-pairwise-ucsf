@@ -30,50 +30,52 @@
       </div>
     </div>
   </nav>
-  <div class="reload-button">
-    <button id="reload" class="button" onclick="window.location.reload()">Start over</button>
+  <div class="menu-button">
+    <button id="reload" class="button" onclick="app.startOver()">Start over</button>
   </div>
   <section id="app" class="section">
     <div class="text-field">
       <label for="gradername">Grader name:</label>
-      <input id="gradername" type="text" onchange="updateGraderName()">
+      <input v-model="grader" id="gradername" type="text">
     </div>
-    <br/>
-    <div class="container">
-      <div class="field">
-        <div class="file is-centered is-boxed has-name">
-          <label class="file-label">
-            <input id="metadatachooser" class="file-input" type="file" accept=".csv" single>
-            <span class="file-cta"> 
-              <span class="file-label">
-                Choose metadata...
+    <div v-if="!allPairsVoted" >
+      <br/>
+      <div class="container">
+        <div class="field">
+          <div class="file is-centered is-boxed has-name">
+            <label class="file-label">
+              <input id="metadatachooser" class="file-input" type="file" accept=".csv" single>
+              <span class="file-cta"> 
+                <span class="file-label">
+                  Choose metadata...
+                </span>
               </span>
-            </span>
-          </label>
+            </label>
+          </div>
         </div>
       </div>
-    </div>
-    <p v-if="metadata.size != 0" class="is-3 has-text-centered">Metadata uploaded successfully</p>
-    <br/>
-    <div class="container">
-      <div class="field">
-        <div v-show="metadata.size != 0" class="file is-centered is-boxed has-name">
-          <label class="file-label">
-            <input id="filechooser" class="file-input" type="file" multiple>
-            <span class="file-cta">
-              <span class="file-icon">
-                <i class="fas fa-upload"></i>
+      <p v-if="metadata.size != 0" class="is-3 has-text-centered">Metadata uploaded successfully</p>
+      <br/>
+      <div class="container">
+        <div class="field">
+          <div v-show="metadata.size != 0" class="file is-centered is-boxed has-name">
+            <label class="file-label">
+              <input id="filechooser" class="file-input" type="file" multiple>
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  Choose images…
+                </span>
               </span>
-              <span class="file-label">
-                Choose images…
-              </span>
-            </span>
-          </label>
+            </label>
+          </div>
         </div>
-      </div>
-    </div> 
+      </div> 
+      <br/>
+    </div>
 
-  <br/>
   <div v-if="nextNotVotedPair != null">
     <p class="title is-3 has-text-centered">Compare images</p>
     <div id="compared-images" class="columns images">
