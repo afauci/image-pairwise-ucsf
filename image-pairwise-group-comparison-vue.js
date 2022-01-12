@@ -11,6 +11,7 @@ const app = new Vue({
     addToGroup: function (file) {
       let masterpersonForItem = this.metadata.get(file.filename);
       let group = this.groups.get(masterpersonForItem);
+      // if there's not already a group for the masterperson, create one
       if (group == null) {
         group = []
       }
@@ -18,8 +19,11 @@ const app = new Vue({
       this.groups.set(masterpersonForItem, group);
     },
     addItem: function (group) {
+      // each item's "value" is a group of photos from a single masterperson
       const newItem = new Item(new Group(group[0], group[1]));
+      // each node has one item, and sets for <, =, and >
       const newSortedNode = new SortedNode(newItem);
+      // each node is put into a pair with each other node
       for (const node of this.nodes) {
         this.pairs.push(new Pair(node, newSortedNode));
       }
@@ -36,7 +40,6 @@ const app = new Vue({
       return encodeURIComponent(csvItems);
     },
     saveCurrentGrading: function() {
-      console.log("Saving current data: " + this.grader);
       localStorage.setItem('pairs', JSON.stringify(this.pairs));
       // pairs JSON
     },
@@ -49,6 +52,7 @@ const app = new Vue({
     }
   },
   computed: {
+    // used to sort the groups for ranking after all comparisons
     sortedNodes: function () {
       return Array.from(this.nodes).sort((a, b) => b.isGreaterThan.size - a.isGreaterThan.size);
     },
@@ -58,6 +62,7 @@ const app = new Vue({
     nextNotVotedPair: function () {
       if (this.notVotedPairs.length > 0) {
         let nextPair = this.notVotedPairs[0];
+        // check if we can already determine the sorting of the pair based on previous comparisons
         if (!(nextPair.item1.isAlreadySorted(nextPair.item2) || nextPair.item2.isAlreadySorted(nextPair.item1))) {
           return nextPair;
         } else {
@@ -107,6 +112,7 @@ doSorting = function(choice) {
 const filechooser = document.querySelector('#filechooser');
 let images = [];
 
+// upload images for sorting
 filechooser.onchange = function () {
   images.forEach(URL.revokeObjectURL);
 
@@ -150,6 +156,7 @@ metadatachooser.onchange = function() {
   reader.readAsText(metadataFile);
 }
 
+// download CSV file with sorting results
 download = function() {
   // clear data from previous comparisons
   let element = document.createElement('a');
