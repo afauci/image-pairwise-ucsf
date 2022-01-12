@@ -3,7 +3,6 @@ const app = new Vue({
   data: {
     nodes: [],
     pairs: [],
-    sortingSets: new Map(),
     metadata: new Map(),
     groups: new Map(),
     grader: null
@@ -39,7 +38,7 @@ const app = new Vue({
     saveCurrentGrading: function() {
       console.log("Saving current data: " + this.grader);
       localStorage.setItem('pairs', JSON.stringify(this.pairs));
-      // pairs, nodes, sortingSets as JSON
+      // pairs JSON
     },
     startOver: function() {
       localStorage.clear();
@@ -47,7 +46,6 @@ const app = new Vue({
     },
     loadFromStorage: function() {
       this.pairs = JSON.parse(localStorage.getItem('pairs'));
-      console.log("Loading from storage: " + this.pairs[0]);
     }
   },
   computed: {

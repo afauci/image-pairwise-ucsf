@@ -11,14 +11,12 @@ class Pair {
   constructor(item1, item2) {
     this.item1 = item1;
     this.item2 = item2;
-    this.winner = null;
     this.voted = false;
   }
 
   _voteFor(item) {
     if (!this.voted) {
       item.score++;
-      this.winner = item;
       this.voted = true;
     }
   }
@@ -34,14 +32,6 @@ class Pair {
   voteForTie() {
     // do nothing, since neither gets a point
     this.voted = true;
-  }
-
-  isItem1Winner() {
-    return this.winner == this.item1;
-  }
-
-  isItem2Winner() {
-    return this.winner == this.item2;
   }
 }
 
