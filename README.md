@@ -62,7 +62,7 @@ To the use the program offline, you need to download the codebase from https://g
 
 ## Saving your grading progress
 
-If you are grading a set of photos and want to save your progress to come back to later, you can do that by hitting the "Save current progress" button above the images. This will download a file with data about the rankings you have done so far. When you wish to resume that grading set, reload the page and after uploading the metadata, choose "Upload saved progress (if needed)". When this prompts you to select a file, choose the CSV that was saved (default name is saved-grading-progress.csv). You will then continue to upload the images as usual, but the saved data will only present the images that you still need to grade, and use the saved data to keep track of existing rankings.
+If you are grading a set of photos and want to save your progress to come back to later, you can do that by hitting the "Save current progress" button above the images. This will download a file with data about the rankings you have done so far. When you wish to resume that grading set, reload the page and after uploading the metadata, choose "Upload saved progress file (if resuming in-progress grading)". When this prompts you to select a file, choose the CSV that was saved (default name is saved-grading-progress.csv). You will then continue to upload the images as usual, but the saved data will only present the images that you still need to grade, and use the saved data to keep track of existing rankings.
 
 ## Tests
 
