@@ -60,6 +60,10 @@ Once the images (or groups of images) are compared, you have the option of downl
 
 To the use the program offline, you need to download the codebase from https://github.com/afauci/image-pairwise-ucsf (go to Code --> Download zip). Once the files are downloaded on your device, open the zip file and click on the image-pairwise-group-comparison.html file (or image-pairwise-comparison.html if using that comparison instead). This will launch them in your browser and allow them to be run locally.
 
-# Tests
+## Saving your grading progress
+
+If you are grading a set of photos and want to save your progress to come back to later, you can do that by hitting the "Save current progress" button above the images. This will download a file with data about the rankings you have done so far. When you wish to resume that grading set, reload the page and after uploading the metadata, choose "Upload saved progress (if needed)". When this prompts you to select a file, choose the CSV that was saved (default name is saved-grading-progress.csv). You will then continue to upload the images as usual, but the saved data will only present the images that you still need to grade, and use the saved data to keep track of existing rankings.
+
+## Tests
 
 There are tests for the comparison sort algorithm in the __tests__ directory.

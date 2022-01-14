@@ -5,7 +5,10 @@ const app = new Vue({
     pairs: [],
     metadata: new Map(),
     groups: new Map(),
-    grader: null
+    grader: null,
+    masterpersonToNode: new Map(),
+    // saved state that can uploaded if progress was saved from previous grading sessions
+    savedState: null
   },
   methods: {
     addToGroup: function (file) {
@@ -28,27 +31,54 @@ const app = new Vue({
         this.pairs.push(new Pair(node, newSortedNode));
       }
       this.nodes.push(newSortedNode);
+      this.masterpersonToNode.set(group[0], newSortedNode);
     },
-    csvContent: function() {
-      csvItems = "grader,masterperson,rank,score\n";
+    // creates the CSV content to be downloaded after ranking is complete
+    csvGradedData: function() {
+      csvItems = "grader,masterperson,rank,score\r\n";
       rank = 1;
       this.sortedNodes.forEach(node => {
-        var fields = [this.grader, node.item.value.masterperson, rank, node.isGreaterThan.size]
+        let fields = [this.grader, node.item.value.masterperson, rank, node.isGreaterThan.size];
         csvItems = csvItems.concat(fields.join(","), "\r\n");
         rank++;
       });
       return encodeURIComponent(csvItems);
     },
-    saveCurrentGrading: function() {
-      localStorage.setItem('pairs', JSON.stringify(this.pairs));
-      // pairs JSON
+    // creates the CSV content for the saved state file that can be downloaded if state is saved partway through
+    csvSavedData: function() {
+      csvItems = "";
+      this.nodes.forEach(node => {
+        csvItems = csvItems.concat(node.item.value.masterperson + "," + this.csvForSet(node.isLessThan));
+        csvItems = csvItems.slice(0,-1).concat("\r\n");
+      });
+      csvItems = csvItems.concat("|\r\n");
+      this.nodes.forEach(node => {
+        csvItems = csvItems.concat(node.item.value.masterperson + "," + this.csvForSet(node.isTied));
+        csvItems = csvItems.slice(0,-1).concat("\r\n");
+      });
+      csvItems = csvItems.concat("|\r\n");
+      this.nodes.forEach(node => {
+        csvItems = csvItems.concat(node.item.value.masterperson + "," + this.csvForSet(node.isGreaterThan));
+        csvItems = csvItems.slice(0,-1).concat("\r\n");
+      });
+      csvItems = csvItems.concat("|\r\n");
+      this.votedPairs.forEach(pair => {
+        let fields = [pair.item1.item.value.masterperson,pair.item2.item.value.masterperson];
+        csvItems = csvItems.concat(fields.join(","), "\r\n");
+      });
+      return encodeURIComponent(csvItems);
+    },
+    csvForSet: function(set) {
+      csvItemsForSet = "";
+      set.forEach(node => {
+        csvItemsForSet = csvItemsForSet.concat(node.item.value.masterperson + ",");
+      })
+      return csvItemsForSet;
     },
     startOver: function() {
       localStorage.clear();
+      app.savedState = null;
       window.location.reload();
-    },
-    loadFromStorage: function() {
-      this.pairs = JSON.parse(localStorage.getItem('pairs'));
     }
   },
   computed: {
@@ -58,6 +88,9 @@ const app = new Vue({
     },
     notVotedPairs: function () {
       return this.pairs.filter(pair => !pair.voted);
+    },
+    votedPairs: function () {
+      return this.pairs.filter(pair => pair.voted);
     },
     nextNotVotedPair: function () {
       if (this.notVotedPairs.length > 0) {
@@ -79,9 +112,6 @@ const app = new Vue({
   mounted() {
     if (localStorage.grader) {
       this.grader = localStorage.grader;
-    }
-    if (localStorage.currentGrading) {
-      
     }
   },
   watch: {
@@ -134,6 +164,39 @@ filechooser.onchange = function () {
   for (const group of app.groups.entries()) {
     app.addItem(group);
   }
+  if (app.savedState != null) {
+    processSavedState();
+  }
+}
+
+// if the user uploads saved state, update the nodes to include the previous rankings
+processSavedState = function() {
+  app.nodes.forEach(node => {
+    node.isLessThan = addAllFromSavedMap(node, app.savedState.isLessThanMap);
+    node.isTied = addAllFromSavedMap(node, app.savedState.isTiedMap);
+    node.isGreaterThan = addAllFromSavedMap(node, app.savedState.isGreaterThanMap);
+  })
+  
+  app.pairs.forEach(pair => {
+    let found = app.savedState.votedPairs.find(votedPair => {
+      return (votedPair[0] === pair.item1.item.value.masterperson && votedPair[1] === pair.item2.item.value.masterperson) ||
+      (votedPair[0] === pair.item2.item.value.masterperson && votedPair[1] === pair.item1.item.value.masterperson);
+    })
+    if (found != null) {
+      pair.voted = true;
+    }
+  })
+}
+
+addAllFromSavedMap = function(node, savedMap) {
+  // add saved state for each node
+  let listOfMasterpersonsInSet = savedMap.get(node.item.value.masterperson);
+  let setOfNodes = new Set();
+  listOfMasterpersonsInSet.forEach(masterperson => {
+    let node = app.masterpersonToNode.get(masterperson);
+    setOfNodes.add(node);
+  })
+  return setOfNodes;
 }
 
 const metadatachooser = document.getElementById('metadatachooser');
@@ -157,10 +220,10 @@ metadatachooser.onchange = function() {
 }
 
 // download CSV file with sorting results
-download = function() {
+downloadRankingCSV = function() {
   // clear data from previous comparisons
   let element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + app.csvContent());
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + app.csvGradedData());
   element.setAttribute('download', "ranking.csv");
 
   element.style.display = 'none';
@@ -169,6 +232,70 @@ download = function() {
   element.click();
 
   document.body.removeChild(element);
+}
+
+// downloads a CSV to save the current progress for ranking to be used in future sessions
+saveCurrentProgress = function() {
+  let element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + app.csvSavedData());
+  element.setAttribute('download', "saved-grading-progress.csv");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+
+const savedProgressChooser = document.getElementById('savedProgressChooser');
+
+// upload savedProgress from a CSV file
+savedProgressChooser.onchange = function() {
+  let savedProgressFile = savedProgressChooser.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e){    
+    let sections = this.result.split("|\r\n");
+
+    // parse the less than mappings
+    let nodeIsLessThanLines = sections[0].split("\r\n");
+    let isLessThanMap = new Map();
+    nodeIsLessThanLines.forEach(nodeLine => {
+      let isLessThanValues = nodeLine.split(',');
+      let baseNodeMasterperson = isLessThanValues.shift();
+      isLessThanMap.set(baseNodeMasterperson, isLessThanValues);
+    })
+
+    // parse the tie mapping
+    let nodeIsTiedLines = sections[1].split("\r\n");
+    let isTiedMap = new Map();
+    nodeIsTiedLines.forEach(nodeLine => {
+      let isTiedValues = nodeLine.split(',');
+      let baseNodeMasterperson = isTiedValues.shift();
+      isTiedMap.set(baseNodeMasterperson, isTiedValues);
+    })
+
+    // parse the greater than mapping
+    let nodeIsGreaterThanLines = sections[2].split("\r\n");
+    let isGreaterThanMap = new Map();
+    nodeIsLessThanLines.forEach(nodeLine => {
+      let isLessThanValues = nodeLine.split(',');
+      let baseNodeMasterperson = isLessThanValues.shift();
+      isGreaterThanMap.set(baseNodeMasterperson, isLessThanValues);
+    })
+
+    let pairLines = sections[3].split("\r\n");
+    let votedPairs = [];
+    pairLines.forEach(pairLine => {
+      let pairValues = pairLine.split(',');
+      votedPairs.push(pairValues);
+    })
+    votedPairs.pop();
+
+    app.savedState = new SavedState(isLessThanMap, isTiedMap, isGreaterThanMap, votedPairs);
+  };
+  reader.readAsText(savedProgressFile);
 }
 
 // Adapted from https://www.w3schools.com/howto/howto_css_modal_images.asp
